@@ -8,14 +8,8 @@ import React, {
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 
-import {
-  PanResponder,
-  TouchableHighlight,
-  StyleSheet,
-  Text,
-  View,
-  ViewPropTypes,
-} from 'react-native';
+import {PanResponder, View,} from 'react-native';
+import {ViewPropTypes} from "deprecated-react-native-prop-types";
 
 const SwipeoutBtn = createReactClass({
 
@@ -55,7 +49,7 @@ const SwipeoutBtn = createReactClass({
     else if (btn.type === 'secondary') styleSwipeoutBtn.push(styles.colorSecondary);
 
     //  apply background color
-    if (btn.backgroundColor) styleSwipeoutBtn.push([{ backgroundColor: btn.backgroundColor }]);
+    if (btn.backgroundColor) styleSwipeoutBtn.push([{backgroundColor: btn.backgroundColor}]);
 
     styleSwipeoutBtn.push([{
       height: btn.height,
@@ -73,7 +67,7 @@ const SwipeoutBtn = createReactClass({
     var styleSwipeoutBtnText = [styles.swipeoutBtnText];
 
     //  apply text color
-    if (btn.color) styleSwipeoutBtnText.push({color: btn.color });
+    if (btn.color) styleSwipeoutBtnText.push({color: btn.color});
 
     return (
       <NativeButton
@@ -84,9 +78,9 @@ const SwipeoutBtn = createReactClass({
         textStyle={styleSwipeoutBtnText}>
         {
           (btn.component ?
-            <View style={styleSwipeoutBtnComponent}>{btn.component}</View>
-            :
-            btn.text
+              <View style={styleSwipeoutBtnComponent}>{btn.component}</View>
+              :
+              btn.text
           )
         }
       </NativeButton>
@@ -197,10 +191,11 @@ const Swipeout = createReactClass({
     if (this.state.swiping) {
       //  move content to reveal swipeout
       if (posX < 0 && this.props.right) {
-        this.setState({ contentPos: Math.min(posX, 0) })
+        this.setState({contentPos: Math.min(posX, 0)})
       } else if (posX > 0 && this.props.left) {
-        this.setState({ contentPos: Math.max(posX, 0) })
-      };
+        this.setState({contentPos: Math.max(posX, 0)})
+      }
+      ;
     }
   },
 
@@ -267,7 +262,7 @@ const Swipeout = createReactClass({
 
   _open: function (contentPos, direction) {
     const left = direction === 'left';
-    const { sectionID, rowID, onOpen } = this.props;
+    const {sectionID, rowID, onOpen} = this.props;
     onOpen && onOpen(sectionID, rowID, direction);
     this._tweenContent('contentPos', contentPos);
     this.setState({
@@ -279,7 +274,7 @@ const Swipeout = createReactClass({
   },
 
   _close: function () {
-    const { sectionID, rowID, onClose } = this.props;
+    const {sectionID, rowID, onClose} = this.props;
     if (onClose && (this.state.openedLeft || this.state.openedRight)) {
       const direction = this.state.openedRight ? 'right' : 'left';
       onClose(sectionID, rowID, direction);
@@ -347,7 +342,7 @@ const Swipeout = createReactClass({
 
     var styleSwipeout = [styles.swipeout, this.props.style];
     if (this.props.backgroundColor) {
-      styleSwipeout.push([{ backgroundColor: this.props.backgroundColor }]);
+      styleSwipeout.push([{backgroundColor: this.props.backgroundColor}]);
     }
 
     var limit = -this.state.btnsRightWidth;
@@ -368,7 +363,7 @@ const Swipeout = createReactClass({
     };
     var styleContentPos = {
       content: {
-        transform: [{ translateX: this._rubberBandEasing(posX, limit) }],
+        transform: [{translateX: this._rubberBandEasing(posX, limit)}],
       },
     };
 
@@ -401,7 +396,7 @@ const Swipeout = createReactClass({
   },
 
   _onLayout: function (event) {
-    var { width, height } = event.nativeEvent.layout;
+    var {width, height} = event.nativeEvent.layout;
     this.setState({
       contentWidth: width,
       contentHeight: height,
@@ -415,7 +410,7 @@ const Swipeout = createReactClass({
       </View>);
     } else {
       return (
-        <View />
+        <View/>
       );
     }
   },

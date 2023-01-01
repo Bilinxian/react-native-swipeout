@@ -4,7 +4,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+  return target;
+};
 
 var _reactTweenState = require('react-tween-state');
 
@@ -31,8 +41,11 @@ var _createReactClass = require('create-react-class');
 var _createReactClass2 = _interopRequireDefault(_createReactClass);
 
 var _reactNative = require('react-native');
+import {ViewPropTypes} from "deprecated-react-native-prop-types";
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {default: obj};
+}
 
 var SwipeoutBtn = (0, _createReactClass2.default)({
   displayName: 'SwipeoutBtn',
@@ -69,10 +82,10 @@ var SwipeoutBtn = (0, _createReactClass2.default)({
     var styleSwipeoutBtn = [_styles2.default.swipeoutBtn];
 
     //  apply "type" styles (delete || primary || secondary)
-    if (btn.type === 'delete') styleSwipeoutBtn.push(_styles2.default.colorDelete);else if (btn.type === 'primary') styleSwipeoutBtn.push(_styles2.default.colorPrimary);else if (btn.type === 'secondary') styleSwipeoutBtn.push(_styles2.default.colorSecondary);
+    if (btn.type === 'delete') styleSwipeoutBtn.push(_styles2.default.colorDelete); else if (btn.type === 'primary') styleSwipeoutBtn.push(_styles2.default.colorPrimary); else if (btn.type === 'secondary') styleSwipeoutBtn.push(_styles2.default.colorSecondary);
 
     //  apply background color
-    if (btn.backgroundColor) styleSwipeoutBtn.push([{ backgroundColor: btn.backgroundColor }]);
+    if (btn.backgroundColor) styleSwipeoutBtn.push([{backgroundColor: btn.backgroundColor}]);
 
     styleSwipeoutBtn.push([{
       height: btn.height,
@@ -90,7 +103,7 @@ var SwipeoutBtn = (0, _createReactClass2.default)({
     var styleSwipeoutBtnText = [_styles2.default.swipeoutBtnText];
 
     //  apply text color
-    if (btn.color) styleSwipeoutBtnText.push({ color: btn.color });
+    if (btn.color) styleSwipeoutBtnText.push({color: btn.color});
 
     return _react2.default.createElement(
       _NativeButton2.default,
@@ -99,10 +112,11 @@ var SwipeoutBtn = (0, _createReactClass2.default)({
         underlayColor: this.props.underlayColor,
         disabled: this.props.disabled,
         style: [_styles2.default.swipeoutBtnTouchable, styleSwipeoutBtn],
-        textStyle: styleSwipeoutBtnText },
+        textStyle: styleSwipeoutBtnText
+      },
       btn.component ? _react2.default.createElement(
         _reactNative.View,
-        { style: styleSwipeoutBtnComponent },
+        {style: styleSwipeoutBtnComponent},
         btn.component
       ) : btn.text
     );
@@ -123,7 +137,7 @@ var Swipeout = (0, _createReactClass2.default)({
     onClose: _propTypes2.default.func,
     right: _propTypes2.default.array,
     scroll: _propTypes2.default.func,
-    style: (_reactNative.ViewPropTypes || _reactNative.View.propTypes).style,
+    style: ViewPropTypes.style,
     sensitivity: _propTypes2.default.number,
     buttonWidth: _propTypes2.default.number,
     disabled: _propTypes2.default.bool
@@ -213,20 +227,21 @@ var Swipeout = (0, _createReactClass2.default)({
     var posY = gestureState.dy;
     var leftWidth = this.state.btnsLeftWidth;
     var rightWidth = this.state.btnsRightWidth;
-    if (this.state.openedRight) var posX = gestureState.dx - rightWidth;else if (this.state.openedLeft) var posX = gestureState.dx + leftWidth;
+    if (this.state.openedRight) var posX = gestureState.dx - rightWidth; else if (this.state.openedLeft) var posX = gestureState.dx + leftWidth;
 
     //  prevent scroll if moveX is true
     var moveX = Math.abs(posX) > Math.abs(posY);
     if (this.props.scroll) {
-      if (moveX) this.props.scroll(false);else this.props.scroll(true);
+      if (moveX) this.props.scroll(false); else this.props.scroll(true);
     }
     if (this.state.swiping) {
       //  move content to reveal swipeout
       if (posX < 0 && this.props.right) {
-        this.setState({ contentPos: Math.min(posX, 0) });
+        this.setState({contentPos: Math.min(posX, 0)});
       } else if (posX > 0 && this.props.left) {
-        this.setState({ contentPos: Math.max(posX, 0) });
-      };
+        this.setState({contentPos: Math.max(posX, 0)});
+      }
+      ;
     }
   },
 
@@ -279,7 +294,7 @@ var Swipeout = (0, _createReactClass2.default)({
   },
 
   _rubberBandEasing: function _rubberBandEasing(value, limit) {
-    if (value < 0 && value < limit) return limit - Math.pow(limit - value, 0.85);else if (value > 0 && value > limit) return limit + Math.pow(value - limit, 0.85);
+    if (value < 0 && value < limit) return limit - Math.pow(limit - value, 0.85); else if (value > 0 && value > limit) return limit + Math.pow(value - limit, 0.85);
     return value;
   },
 
@@ -293,9 +308,9 @@ var Swipeout = (0, _createReactClass2.default)({
   _open: function _open(contentPos, direction) {
     var left = direction === 'left';
     var _props = this.props,
-        sectionID = _props.sectionID,
-        rowID = _props.rowID,
-        onOpen = _props.onOpen;
+      sectionID = _props.sectionID,
+      rowID = _props.rowID,
+      onOpen = _props.onOpen;
 
     onOpen && onOpen(sectionID, rowID, direction);
     this._tweenContent('contentPos', contentPos);
@@ -309,9 +324,9 @@ var Swipeout = (0, _createReactClass2.default)({
 
   _close: function _close() {
     var _props2 = this.props,
-        sectionID = _props2.sectionID,
-        rowID = _props2.rowID,
-        onClose = _props2.onClose;
+      sectionID = _props2.sectionID,
+      rowID = _props2.rowID,
+      onClose = _props2.onClose;
 
     if (onClose && (this.state.openedLeft || this.state.openedRight)) {
       var direction = this.state.openedRight ? 'right' : 'left';
@@ -384,7 +399,7 @@ var Swipeout = (0, _createReactClass2.default)({
 
     var styleSwipeout = [_styles2.default.swipeout, this.props.style];
     if (this.props.backgroundColor) {
-      styleSwipeout.push([{ backgroundColor: this.props.backgroundColor }]);
+      styleSwipeout.push([{backgroundColor: this.props.backgroundColor}]);
     }
 
     var limit = -this.state.btnsRightWidth;
@@ -405,7 +420,7 @@ var Swipeout = (0, _createReactClass2.default)({
     };
     var styleContentPos = {
       content: {
-        transform: [{ translateX: this._rubberBandEasing(posX, limit) }]
+        transform: [{translateX: this._rubberBandEasing(posX, limit)}]
       }
     };
 
@@ -423,7 +438,7 @@ var Swipeout = (0, _createReactClass2.default)({
 
     return _react2.default.createElement(
       _reactNative.View,
-      { style: styleSwipeout },
+      {style: styleSwipeout},
       _react2.default.createElement(
         _reactNative.View,
         _extends({
@@ -440,8 +455,8 @@ var Swipeout = (0, _createReactClass2.default)({
 
   _onLayout: function _onLayout(event) {
     var _event$nativeEvent$la = event.nativeEvent.layout,
-        width = _event$nativeEvent$la.width,
-        height = _event$nativeEvent$la.height;
+      width = _event$nativeEvent$la.width,
+      height = _event$nativeEvent$la.height;
 
     this.setState({
       contentWidth: width,
@@ -453,7 +468,7 @@ var Swipeout = (0, _createReactClass2.default)({
     if (buttons && isVisible) {
       return _react2.default.createElement(
         _reactNative.View,
-        { style: style },
+        {style: style},
         buttons.map(this._renderButton)
       );
     } else {
